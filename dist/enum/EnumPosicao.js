@@ -9,4 +9,4 @@ var Posicao;
     Posicao["VOLANTE"] = "Volante";
     Posicao["MEIA"] = "Meia";
     Posicao["ATACANTE"] = "Atacante";
-})(Posicao || (exports.Posicao = Posicao = {}));
+})(Posicao = exports.Posicao || (exports.Posicao = {}));
