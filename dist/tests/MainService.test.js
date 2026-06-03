@@ -9,6 +9,10 @@ const EnumPosicao_1 = require("../enum/EnumPosicao");
 (0, globals_1.describe)("Testes do MainService", () => {
     let service;
     (0, globals_1.beforeEach)(() => {
+        const fs = require('fs');
+        if (fs.existsSync('database.json')) {
+            fs.unlinkSync('database.json');
+        }
         service = new MainService_1.default();
     });
     (0, globals_1.test)("Deve criar um time corretamente", () => {

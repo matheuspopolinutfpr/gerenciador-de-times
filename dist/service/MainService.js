@@ -14,6 +14,7 @@ class MainService {
     criarTime(name) {
         const time = new Time_1.default(name);
         this.database.times.add(time);
+        this.database.salvar();
         return time;
     }
     listarTimes() {
@@ -28,6 +29,7 @@ class MainService {
     criarJogador(nome, dataNascimento, posicao, numero) {
         const jogador = new Jogador_1.default(nome, dataNascimento, posicao, numero);
         this.database.jogadores.add(jogador);
+        this.database.salvar();
         return jogador;
     }
     listarJogadores() {
@@ -51,6 +53,7 @@ class MainService {
     criarTecnico(nome, dataNascimento) {
         const tecnico = new Tecnico_1.default(nome, dataNascimento);
         this.database.tecnicos.add(tecnico);
+        this.database.salvar();
         return tecnico;
     }
     listarTecnicos() {

@@ -49,7 +49,7 @@ export default class MainController {
         numero: number | string
     ): Jogador[] {
 
-        return this.mainService.buscarJogadoresPorNumero(numero);
+        return this.mainService.buscarJogadoresPorNumero(numero as any);
     }
 
     public criarTecnico(

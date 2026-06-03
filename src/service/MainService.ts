@@ -11,6 +11,7 @@ export default class MainService {
     public criarTime(name: string): Time {
         const time = new Time(name);
         this.database.times.add(time);
+        this.database.salvar();
         return time;
     }
 
@@ -40,6 +41,7 @@ export default class MainService {
         );
 
         this.database.jogadores.add(jogador);
+        this.database.salvar();
 
         return jogador;
     }
@@ -87,6 +89,7 @@ export default class MainService {
         );
 
         this.database.tecnicos.add(tecnico);
+        this.database.salvar();
 
         return tecnico;
     }

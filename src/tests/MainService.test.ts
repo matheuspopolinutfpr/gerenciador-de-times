@@ -7,6 +7,10 @@ describe("Testes do MainService", () => {
     let service: MainService;
 
     beforeEach(() => {
+        const fs = require('fs');
+        if (fs.existsSync('database.json')) {
+            fs.unlinkSync('database.json');
+        }
         service = new MainService();
     });
 
