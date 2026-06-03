@@ -1,10 +1,10 @@
 import FirstScreen from "../view/FirstScreen";
 import MainService from "../service/MainService";
 import JsonDatabase from "../database/JsonDatabase";
-import Jogador from "../model/Jogador";
-import Tecnico from "../model/Tecnico";
-import Time from "../model/Time";
-import { Posicao } from "../enum/EnumPosicao";
+import Player from "../model/Player";
+import Coach from "../model/Coach";
+import Team from "../model/Team";
+import { Position } from "../enum/Position";
 
 export default class MainController {
 
@@ -16,55 +16,55 @@ export default class MainController {
         this.firstScreen = new FirstScreen(this);
     }
 
-    public criarTime(name: string): Time {
-        return this.mainService.criarTime(name);
+    public createTeam(name: string): Team {
+        return this.mainService.createTeam(name);
     }
 
-    public listarTimes(): string {
-        return this.mainService.listarTimes();
+    public listTeams(): string {
+        return this.mainService.listTeams();
     }
 
-    public criarJogador(
-        nome: string,
-        dataNascimento: Date,
-        posicao: Posicao,
-        numero: number
-    ): Jogador {
+    public createPlayer(
+        name: string,
+        birthDate: Date,
+        position: Position,
+        number: number
+    ): Player {
 
-        return this.mainService.criarJogador(
-            nome,
-            dataNascimento,
-            posicao,
-            numero
+        return this.mainService.createPlayer(
+            name,
+            birthDate,
+            position,
+            number
         );
     }
 
-    public listarJogadores(): string {
-        return this.mainService.listarJogadores();
+    public listPlayers(): string {
+        return this.mainService.listPlayers();
     }
 
-    public buscarJogadoresPorNumero(numero: number): Jogador[];
-    public buscarJogadoresPorNumero(numero: string): Jogador[];
+    public findPlayersByNumber(number: number): Player[];
+    public findPlayersByNumber(number: string): Player[];
 
-    public buscarJogadoresPorNumero(
-        numero: number | string
-    ): Jogador[] {
+    public findPlayersByNumber(
+        number: number | string
+    ): Player[] {
 
-        return this.mainService.buscarJogadoresPorNumero(numero as any);
+        return this.mainService.findPlayersByNumber(number as any);
     }
 
-    public criarTecnico(
-        nome: string,
-        dataNascimento: Date
-    ): Tecnico {
+    public createCoach(
+        name: string,
+        birthDate: Date
+    ): Coach {
 
-        return this.mainService.criarTecnico(
-            nome,
-            dataNascimento
+        return this.mainService.createCoach(
+            name,
+            birthDate
         );
     }
 
-    public listarTecnicos(): string {
-        return this.mainService.listarTecnicos();
+    public listCoaches(): string {
+        return this.mainService.listCoaches();
     }
 }

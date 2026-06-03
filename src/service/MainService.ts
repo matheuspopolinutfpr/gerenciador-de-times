@@ -1,8 +1,8 @@
 import IDatabase from "../interface/IDatabase";
-import Jogador from "../model/Jogador";
-import Tecnico from "../model/Tecnico";
-import Time from "../model/Time";
-import { Posicao } from "../enum/EnumPosicao";
+import Player from "../model/Player";
+import Coach from "../model/Coach";
+import Team from "../model/Team";
+import { Position } from "../enum/Position";
 
 export default class MainService {
 
@@ -12,100 +12,100 @@ export default class MainService {
         this.database = database;
     }
 
-    public criarTime(name: string): Time {
-        const time = new Time(name);
-        this.database.times.add(time);
-        this.database.salvar();
-        return time;
+    public createTeam(name: string): Team {
+        const team = new Team(name);
+        this.database.teams.add(team);
+        this.database.save();
+        return team;
     }
 
-    public listarTimes(): string {
-        if (this.database.times.length === 0) {
-            return "Nenhum time cadastrado.";
+    public listTeams(): string {
+        if (this.database.teams.length === 0) {
+            return "Nenhum time registrado";
         }
 
-        return this.database.times
+        return this.database.teams
             .list()
-            .map((t, i) => `${i + 1} - ${t.getNome()}`)
+            .map((t, i) => `${i + 1} - ${t.getName()}`)
             .join("\n");
     }
 
-    public criarJogador(
-        nome: string,
-        dataNascimento: Date,
-        posicao: Posicao,
-        numero: number
-    ): Jogador {
+    public createPlayer(
+        name: string,
+        birthDate: Date,
+        position: Position,
+        number: number
+    ): Player {
 
-        const jogador = new Jogador(
-            nome,
-            dataNascimento,
-            posicao,
-            numero
+        const player = new Player(
+            name,
+            birthDate,
+            position,
+            number
         );
 
-        this.database.jogadores.add(jogador);
-        this.database.salvar();
+        this.database.players.add(player);
+        this.database.save();
 
-        return jogador;
+        return player;
     }
 
-    public listarJogadores(): string {
-        if (this.database.jogadores.length === 0) {
-            return "Nenhum jogador cadastrado.";
+    public listPlayers(): string {
+        if (this.database.players.length === 0) {
+            return "Nenhum jogador registrado";
         }
 
-        return this.database.jogadores
+        return this.database.players
             .list()
-            .map((j, i) => `${i + 1} - ${j.getResumo()}`)
+            .map((j, i) => `${i + 1} - ${j.getSummary()}`)
             .join("\n");
     }
 
-    public buscarJogadoresPorNumero(numero: number): Jogador[];
-    public buscarJogadoresPorNumero(numero: string): Jogador[];
+    public findPlayersByNumber(number: number): Player[];
+    public findPlayersByNumber(number: string): Player[];
 
-    public buscarJogadoresPorNumero(
-        numero: number | string
-    ): Jogador[] {
+    public findPlayersByNumber(
+        number: number | string
+    ): Player[] {
 
         const n =
-            typeof numero === "string"
-                ? parseInt(numero, 10)
-                : numero;
+            typeof number === "string"
+                ? parseInt(number, 10)
+                : number;
 
         if (Number.isNaN(n)) {
             return [];
         }
 
-        return this.database.jogadores.filter(
-            (j) => j.getNumero() === n
+        return this.database.players.filter(
+            (j) => j.getNumber() === n
         );
     }
 
-    public criarTecnico(
-        nome: string,
-        dataNascimento: Date
-    ): Tecnico {
+    public createCoach(
+        name: string,
+        birthDate: Date
+    ): Coach {
 
-        const tecnico = new Tecnico(
-            nome,
-            dataNascimento
+        const coach = new Coach(
+            name,
+            birthDate
         );
 
-        this.database.tecnicos.add(tecnico);
-        this.database.salvar();
+        this.database.coaches.add(coach);
+        this.database.save();
 
-        return tecnico;
+        return coach;
     }
 
-    public listarTecnicos(): string {
-        if (this.database.tecnicos.length === 0) {
-            return "Nenhum técnico cadastrado.";
+    public listCoaches(): string {
+        if (this.database.coaches.length === 0) {
+            return "Nenhum técnico registrado";
         }
 
-        return this.database.tecnicos
+        return this.database.coaches
             .list()
-            .map((t, i) => `${i + 1} - ${t.getResumo()}`)
+            .map((t, i) => `${i + 1} - ${t.getSummary()}`)
             .join("\n");
     }
 }

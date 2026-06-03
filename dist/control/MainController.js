@@ -11,26 +11,26 @@ class MainController {
         this.mainService = new MainService_1.default(new JsonDatabase_1.default());
         this.firstScreen = new FirstScreen_1.default(this);
     }
-    criarTime(name) {
-        return this.mainService.criarTime(name);
+    createTeam(name) {
+        return this.mainService.createTeam(name);
     }
-    listarTimes() {
-        return this.mainService.listarTimes();
+    listTeams() {
+        return this.mainService.listTeams();
     }
-    criarJogador(nome, dataNascimento, posicao, numero) {
-        return this.mainService.criarJogador(nome, dataNascimento, posicao, numero);
+    createPlayer(name, birthDate, position, number) {
+        return this.mainService.createPlayer(name, birthDate, position, number);
     }
-    listarJogadores() {
-        return this.mainService.listarJogadores();
+    listPlayers() {
+        return this.mainService.listPlayers();
     }
-    buscarJogadoresPorNumero(numero) {
-        return this.mainService.buscarJogadoresPorNumero(numero);
+    findPlayersByNumber(number) {
+        return this.mainService.findPlayersByNumber(number);
     }
-    criarTecnico(nome, dataNascimento) {
-        return this.mainService.criarTecnico(nome, dataNascimento);
+    createCoach(name, birthDate) {
+        return this.mainService.createCoach(name, birthDate);
     }
-    listarTecnicos() {
-        return this.mainService.listarTecnicos();
+    listCoaches() {
+        return this.mainService.listCoaches();
     }
 }
 exports.default = MainController;

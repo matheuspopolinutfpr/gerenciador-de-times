@@ -1,9 +1,9 @@
 import MainService from "../service/MainService";
 import MemoryDatabase from "../database/MemoryDatabase";
 import { expect, test, describe, beforeEach } from "@jest/globals";
-import { Posicao } from "../enum/EnumPosicao";
+import { Position } from "../enum/Position";
 
-describe("Testes do MainService", () => {
+describe("MainService tests", () => {
 
     let service: MainService;
 
@@ -11,131 +11,131 @@ describe("Testes do MainService", () => {
         service = new MainService(new MemoryDatabase());
     });
 
-    test("Deve criar um time corretamente", () => {
+    test("Should create a team correctly", () => {
 
-        const time = service.criarTime("Flamengo");
+        const team = service.createTeam("Flamengo");
 
-        expect(time.getNome()).toBe("Flamengo");
-        expect(service.database.times.length).toBe(1);
+        expect(team.getName()).toBe("Flamengo");
+        expect(service.database.teams.length).toBe(1);
     });
 
-    test("Deve listar times corretamente", () => {
+    test("Should list teams correctly", () => {
 
-        service.criarTime("Flamengo");
-        service.criarTime("Palmeiras");
+        service.createTeam("Flamengo");
+        service.createTeam("Palmeiras");
 
-        expect(service.listarTimes()).toBe(
+        expect(service.listTeams()).toBe(
             "1 - Flamengo\n2 - Palmeiras"
         );
     });
 
-    test("Deve retornar mensagem quando não houver times", () => {
+    test("Should return message when there are no teams", () => {
 
-        expect(service.listarTimes()).toBe(
-            "Nenhum time cadastrado."
+        expect(service.listTeams()).toBe(
+            "Nenhum time registrado"
         );
     });
 
-    test("Deve criar um jogador corretamente", () => {
+    test("Should create a player correctly", () => {
 
-        const jogador = service.criarJogador(
+        const player = service.createPlayer(
             "Neymar",
             new Date("1992-02-05"),
-            Posicao.ATACANTE,
+            Position.FORWARD,
             10
         );
 
-        expect(jogador.getNumero()).toBe(10);
-        expect(service.database.jogadores.length).toBe(1);
+        expect(player.getNumber()).toBe(10);
+        expect(service.database.players.length).toBe(1);
     });
 
-    test("Deve listar jogadores corretamente", () => {
+    test("Should list players correctly", () => {
 
-        service.criarJogador(
+        service.createPlayer(
             "Neymar",
             new Date("1992-02-05"),
-            Posicao.ATACANTE,
+            Position.FORWARD,
             10
         );
 
-        const lista = service.listarJogadores();
+        const list = service.listPlayers();
 
-        expect(lista).toContain("1 -");
-        expect(lista).toContain("Neymar");
+        expect(list).toContain("1 -");
+        expect(list).toContain("Neymar");
     });
 
-    test("Deve retornar mensagem quando não houver jogadores", () => {
+    test("Should return message when there are no players", () => {
 
-        expect(service.listarJogadores()).toBe(
-            "Nenhum jogador cadastrado."
+        expect(service.listPlayers()).toBe(
+            "Nenhum jogador registrado"
         );
     });
 
-    test("Deve buscar jogador pelo número", () => {
+    test("Should find player by number", () => {
 
-        service.criarJogador(
+        service.createPlayer(
             "Neymar",
             new Date("1992-02-05"),
-            Posicao.ATACANTE,
+            Position.FORWARD,
             10
         );
 
-        const jogadores = service.buscarJogadoresPorNumero(10);
+        const players = service.findPlayersByNumber(10);
 
-        expect(jogadores.length).toBe(1);
-        expect(jogadores[0].getNumero()).toBe(10);
+        expect(players.length).toBe(1);
+        expect(players[0].getNumber()).toBe(10);
     });
 
-    test("Deve buscar jogador pelo número usando string", () => {
+    test("Should find player by number using string", () => {
 
-        service.criarJogador(
+        service.createPlayer(
             "Messi",
             new Date("1987-06-24"),
-            Posicao.ATACANTE,
+            Position.FORWARD,
             30
         );
 
-        const jogadores = service.buscarJogadoresPorNumero("30");
+        const players = service.findPlayersByNumber("30");
 
-        expect(jogadores.length).toBe(1);
-        expect(jogadores[0].getNumero()).toBe(30);
+        expect(players.length).toBe(1);
+        expect(players[0].getNumber()).toBe(30);
     });
 
-    test("Deve retornar array vazio para número inválido", () => {
+    test("Should return empty array for invalid number", () => {
 
-        const jogadores = service.buscarJogadoresPorNumero("abc");
+        const players = service.findPlayersByNumber("abc");
 
-        expect(jogadores.length).toBe(0);
+        expect(players.length).toBe(0);
     });
 
-    test("Deve criar um técnico corretamente", () => {
+    test("Should create a coach correctly", () => {
 
-        const tecnico = service.criarTecnico(
+        const coach = service.createCoach(
             "Tite",
             new Date("1961-05-25")
         );
 
-        expect(tecnico).toBeDefined();
-        expect(service.database.tecnicos.length).toBe(1);
+        expect(coach).toBeDefined();
+        expect(service.database.coaches.length).toBe(1);
     });
 
-    test("Deve listar técnicos corretamente", () => {
+    test("Should list coaches correctly", () => {
 
-        service.criarTecnico(
+        service.createCoach(
             "Tite",
             new Date("1961-05-25")
         );
 
-        const lista = service.listarTecnicos();
+        const list = service.listCoaches();
 
-        expect(lista).toContain("1 -");
-        expect(lista).toContain("Tite");
+        expect(list).toContain("1 -");
+        expect(list).toContain("Tite");
     });
 
-    test("Deve retornar mensagem quando não houver técnicos", () => {
+    test("Should return message when there are no coaches", () => {
 
-        expect(service.listarTecnicos()).toBe(
-            "Nenhum técnico cadastrado."
+        expect(service.listCoaches()).toBe(
+            "Nenhum técnico registrado"
         );
     });
 

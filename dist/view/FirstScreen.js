@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const prompt_sync_1 = __importDefault(require("prompt-sync"));
-const EnumPosicao_1 = require("../enum/EnumPosicao");
+const Position_1 = require("../enum/Position");
 const EmptyNameError_1 = require("../error/EmptyNameError");
 class FirstScreen {
     constructor(controller) {
@@ -28,9 +28,9 @@ class FirstScreen {
             switch (opt) {
                 case '1': {
                     try {
-                        const nome = this.prompt('Nome do time: ');
-                        const t = this.controller.criarTime(nome);
-                        console.log(`Time criado: ${t.getNome()}`);
+                        const name = this.prompt('Nome do time: ');
+                        const t = this.controller.createTeam(name);
+                        console.log(`Time criado: ${t.getName()}`);
                     }
                     catch (error) {
                         if (error instanceof EmptyNameError_1.EmptyNameError) {
@@ -43,24 +43,24 @@ class FirstScreen {
                     break;
                 }
                 case '2': {
-                    console.log(this.controller.listarTimes());
+                    console.log(this.controller.listTeams());
                     break;
                 }
                 case '3': {
                     try {
-                        const nome = this.prompt('Nome do jogador: ');
+                        const name = this.prompt('Nome do jogador: ');
                         const dataStr = this.prompt('Data de nascimento (YYYY-MM-DD): ');
                         const numeroStr = this.prompt('Número do jogador: ');
                         console.log('Posições:');
-                        const posicoes = Object.values(EnumPosicao_1.Posicao);
-                        posicoes.forEach((p, i) => console.log(`${i + 1} - ${p}`));
+                        const positions = Object.values(Position_1.Position);
+                        positions.forEach((p, i) => console.log(`${i + 1} - ${p}`));
                         const posOpt = this.prompt('Escolha a posição (número): ');
                         const posIndex = parseInt(posOpt || '1', 10) - 1;
-                        const posicao = Object.values(EnumPosicao_1.Posicao)[posIndex];
+                        const position = Object.values(Position_1.Position)[posIndex];
                         const data = new Date(dataStr);
-                        const numero = parseInt(numeroStr || '0', 10);
-                        const j = this.controller.criarJogador(nome, data, posicao, numero);
-                        console.log(`Jogador criado: ${j.getResumo()}`);
+                        const number = parseInt(numeroStr || '0', 10);
+                        const j = this.controller.createPlayer(name, data, position, number);
+                        console.log(`Joagador criado: ${j.getSummary()}`);
                     }
                     catch (error) {
                         if (error instanceof EmptyNameError_1.EmptyNameError) {
@@ -73,16 +73,16 @@ class FirstScreen {
                     break;
                 }
                 case '4': {
-                    console.log(this.controller.listarJogadores());
+                    console.log(this.controller.listPlayers());
                     break;
                 }
                 case '5': {
                     try {
-                        const nome = this.prompt('Nome do técnico: ');
+                        const name = this.prompt('Nome do técnico: ');
                         const dataStr = this.prompt('Data de nascimento (YYYY-MM-DD): ');
                         const data = new Date(dataStr);
-                        const tec = this.controller.criarTecnico(nome, data);
-                        console.log(`Técnico criado: ${tec.getNome()}`);
+                        const tec = this.controller.createCoach(name, data);
+                        console.log(`Técnico criado: ${tec.getName()}`);
                     }
                     catch (error) {
                         if (error instanceof EmptyNameError_1.EmptyNameError) {
@@ -95,17 +95,17 @@ class FirstScreen {
                     break;
                 }
                 case '6': {
-                    console.log(this.controller.listarTecnicos());
+                    console.log(this.controller.listCoaches());
                     break;
                 }
                 case '7': {
                     const numStr = this.prompt('Número da camisa: ');
-                    const jogadores = this.controller.buscarJogadoresPorNumero(numStr);
-                    if (jogadores.length === 0) {
-                        console.log('Nenhum jogador encontrado com esse número.');
+                    const players = this.controller.findPlayersByNumber(numStr);
+                    if (players.length === 0) {
+                        console.log('Nenhum jogafor encontrado com esse número.');
                     }
                     else {
-                        console.log(jogadores.map((j) => j.getResumo()).join('\n'));
+                        console.log(players.map((j) => j.getSummary()).join('\n'));
                     }
                     break;
                 }

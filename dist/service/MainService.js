@@ -3,65 +3,65 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Jogador_1 = __importDefault(require("../model/Jogador"));
-const Tecnico_1 = __importDefault(require("../model/Tecnico"));
-const Time_1 = __importDefault(require("../model/Time"));
+const Player_1 = __importDefault(require("../model/Player"));
+const Coach_1 = __importDefault(require("../model/Coach"));
+const Team_1 = __importDefault(require("../model/Team"));
 class MainService {
     constructor(database) {
         this.database = database;
     }
-    criarTime(name) {
-        const time = new Time_1.default(name);
-        this.database.times.add(time);
-        this.database.salvar();
-        return time;
+    createTeam(name) {
+        const team = new Team_1.default(name);
+        this.database.teams.add(team);
+        this.database.save();
+        return team;
     }
-    listarTimes() {
-        if (this.database.times.length === 0) {
-            return "Nenhum time cadastrado.";
+    listTeams() {
+        if (this.database.teams.length === 0) {
+            return "Nenhum time registrado";
         }
-        return this.database.times
+        return this.database.teams
             .list()
-            .map((t, i) => `${i + 1} - ${t.getNome()}`)
+            .map((t, i) => `${i + 1} - ${t.getName()}`)
             .join("\n");
     }
-    criarJogador(nome, dataNascimento, posicao, numero) {
-        const jogador = new Jogador_1.default(nome, dataNascimento, posicao, numero);
-        this.database.jogadores.add(jogador);
-        this.database.salvar();
-        return jogador;
+    createPlayer(name, birthDate, position, number) {
+        const player = new Player_1.default(name, birthDate, position, number);
+        this.database.players.add(player);
+        this.database.save();
+        return player;
     }
-    listarJogadores() {
-        if (this.database.jogadores.length === 0) {
-            return "Nenhum jogador cadastrado.";
+    listPlayers() {
+        if (this.database.players.length === 0) {
+            return "Nenhum jogador registrado";
         }
-        return this.database.jogadores
+        return this.database.players
             .list()
-            .map((j, i) => `${i + 1} - ${j.getResumo()}`)
+            .map((j, i) => `${i + 1} - ${j.getSummary()}`)
             .join("\n");
     }
-    buscarJogadoresPorNumero(numero) {
-        const n = typeof numero === "string"
-            ? parseInt(numero, 10)
-            : numero;
+    findPlayersByNumber(number) {
+        const n = typeof number === "string"
+            ? parseInt(number, 10)
+            : number;
         if (Number.isNaN(n)) {
             return [];
         }
-        return this.database.jogadores.filter((j) => j.getNumero() === n);
+        return this.database.players.filter((j) => j.getNumber() === n);
     }
-    criarTecnico(nome, dataNascimento) {
-        const tecnico = new Tecnico_1.default(nome, dataNascimento);
-        this.database.tecnicos.add(tecnico);
-        this.database.salvar();
-        return tecnico;
+    createCoach(name, birthDate) {
+        const coach = new Coach_1.default(name, birthDate);
+        this.database.coaches.add(coach);
+        this.database.save();
+        return coach;
     }
-    listarTecnicos() {
-        if (this.database.tecnicos.length === 0) {
-            return "Nenhum técnico cadastrado.";
+    listCoaches() {
+        if (this.database.coaches.length === 0) {
+            return "Nenhum técnico registrado";
         }
-        return this.database.tecnicos
+        return this.database.coaches
             .list()
-            .map((t, i) => `${i + 1} - ${t.getResumo()}`)
+            .map((t, i) => `${i + 1} - ${t.getSummary()}`)
             .join("\n");
     }
 }

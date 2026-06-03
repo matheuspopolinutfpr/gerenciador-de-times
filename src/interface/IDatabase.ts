@@ -1,11 +1,11 @@
 import Repository from "../service/Repository";
-import Jogador from "../model/Jogador";
-import Tecnico from "../model/Tecnico";
-import Time from "../model/Time";
+import Player from "../model/Player";
+import Coach from "../model/Coach";
+import Team from "../model/Team";
 
 export default interface IDatabase {
-    times: Repository<Time>;
-    jogadores: Repository<Jogador>;
-    tecnicos: Repository<Tecnico>;
-    salvar(): void;
+    teams: Repository<Team>;
+    players: Repository<Player>;
+    coaches: Repository<Coach>;
+    save(): void;
 }

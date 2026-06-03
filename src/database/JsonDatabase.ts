@@ -1,14 +1,14 @@
 import * as fs from 'fs';
 import IDatabase from '../interface/IDatabase';
 import Repository from "../service/Repository";
-import Jogador from "../model/Jogador";
-import Tecnico from "../model/Tecnico";
-import Time from "../model/Time";
+import Player from "../model/Player";
+import Coach from "../model/Coach";
+import Team from "../model/Team";
 
 export default class JsonDatabase implements IDatabase {
-    public times: Repository<Time> = new Repository<Time>();
-    public jogadores: Repository<Jogador> = new Repository<Jogador>();
-    public tecnicos: Repository<Tecnico> = new Repository<Tecnico>();
+    public teams: Repository<Team> = new Repository<Team>();
+    public players: Repository<Player> = new Repository<Player>();
+    public coaches: Repository<Coach> = new Repository<Coach>();
 
     constructor() {
         this.load();
@@ -22,34 +22,34 @@ export default class JsonDatabase implements IDatabase {
 
         const parsed = JSON.parse(data);
 
-        if (parsed.times) {
-            for (const t of parsed.times) {
-                const time = new Time(t.nome);
-                Object.assign(time, t);
-                this.times.add(time);
+        if (parsed.teams) {
+            for (const t of parsed.teams) {
+                const team = new Team(t.name);
+                Object.assign(team, t);
+                this.teams.add(team);
             }
         }
-        if (parsed.jogadores) {
-            for (const j of parsed.jogadores) {
-                const jog = new Jogador(j.nome, new Date(j.dataNascimento), j.posicao, j.numero);
+        if (parsed.players) {
+            for (const j of parsed.players) {
+                const jog = new Player(j.name, new Date(j.birthDate), j.position, j.number);
                 Object.assign(jog, j);
-                this.jogadores.add(jog);
+                this.players.add(jog);
             }
         }
-        if (parsed.tecnicos) {
-            for (const t of parsed.tecnicos) {
-                const tec = new Tecnico(t.nome, new Date(t.dataNascimento));
+        if (parsed.coaches) {
+            for (const t of parsed.coaches) {
+                const tec = new Coach(t.name, new Date(t.birthDate));
                 Object.assign(tec, t);
-                this.tecnicos.add(tec);
+                this.coaches.add(tec);
             }
         }
     }
 
-    public salvar() {
+    public save() {
         const data = {
-            times: this.times.list(),
-            jogadores: this.jogadores.list(),
-            tecnicos: this.tecnicos.list()
+            teams: this.teams.list(),
+            players: this.players.list(),
+            coaches: this.coaches.list()
         };
         fs.writeFileSync('database.json', JSON.stringify(data, null, 2), 'utf-8');
     }

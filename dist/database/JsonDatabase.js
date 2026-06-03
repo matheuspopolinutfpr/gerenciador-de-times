@@ -28,14 +28,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
 const Repository_1 = __importDefault(require("../service/Repository"));
-const Jogador_1 = __importDefault(require("../model/Jogador"));
-const Tecnico_1 = __importDefault(require("../model/Tecnico"));
-const Time_1 = __importDefault(require("../model/Time"));
+const Player_1 = __importDefault(require("../model/Player"));
+const Coach_1 = __importDefault(require("../model/Coach"));
+const Team_1 = __importDefault(require("../model/Team"));
 class JsonDatabase {
     constructor() {
-        this.times = new Repository_1.default();
-        this.jogadores = new Repository_1.default();
-        this.tecnicos = new Repository_1.default();
+        this.teams = new Repository_1.default();
+        this.players = new Repository_1.default();
+        this.coaches = new Repository_1.default();
         this.load();
     }
     load() {
@@ -45,33 +45,33 @@ class JsonDatabase {
         if (data.trim() === '')
             return;
         const parsed = JSON.parse(data);
-        if (parsed.times) {
-            for (const t of parsed.times) {
-                const time = new Time_1.default(t.nome);
-                Object.assign(time, t);
-                this.times.add(time);
+        if (parsed.teams) {
+            for (const t of parsed.teams) {
+                const team = new Team_1.default(t.name);
+                Object.assign(team, t);
+                this.teams.add(team);
             }
         }
-        if (parsed.jogadores) {
-            for (const j of parsed.jogadores) {
-                const jog = new Jogador_1.default(j.nome, new Date(j.dataNascimento), j.posicao, j.numero);
+        if (parsed.players) {
+            for (const j of parsed.players) {
+                const jog = new Player_1.default(j.name, new Date(j.birthDate), j.position, j.number);
                 Object.assign(jog, j);
-                this.jogadores.add(jog);
+                this.players.add(jog);
             }
         }
-        if (parsed.tecnicos) {
-            for (const t of parsed.tecnicos) {
-                const tec = new Tecnico_1.default(t.nome, new Date(t.dataNascimento));
+        if (parsed.coaches) {
+            for (const t of parsed.coaches) {
+                const tec = new Coach_1.default(t.name, new Date(t.birthDate));
                 Object.assign(tec, t);
-                this.tecnicos.add(tec);
+                this.coaches.add(tec);
             }
         }
     }
-    salvar() {
+    save() {
         const data = {
-            times: this.times.list(),
-            jogadores: this.jogadores.list(),
-            tecnicos: this.tecnicos.list()
+            teams: this.teams.list(),
+            players: this.players.list(),
+            coaches: this.coaches.list()
         };
         fs.writeFileSync('database.json', JSON.stringify(data, null, 2), 'utf-8');
     }
