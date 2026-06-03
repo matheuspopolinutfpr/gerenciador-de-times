@@ -1,4 +1,5 @@
 import MainService from "../service/MainService";
+import MemoryDatabase from "../database/MemoryDatabase";
 import { expect, test, describe, beforeEach } from "@jest/globals";
 import { Posicao } from "../enum/EnumPosicao";
 
@@ -7,11 +8,7 @@ describe("Testes do MainService", () => {
     let service: MainService;
 
     beforeEach(() => {
-        const fs = require('fs');
-        if (fs.existsSync('database.json')) {
-            fs.unlinkSync('database.json');
-        }
-        service = new MainService();
+        service = new MainService(new MemoryDatabase());
     });
 
     test("Deve criar um time corretamente", () => {

@@ -5,9 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const FirstScreen_1 = __importDefault(require("../view/FirstScreen"));
 const MainService_1 = __importDefault(require("../service/MainService"));
+const JsonDatabase_1 = __importDefault(require("../database/JsonDatabase"));
 class MainController {
     constructor() {
-        this.mainService = new MainService_1.default();
+        this.mainService = new MainService_1.default(new JsonDatabase_1.default());
         this.firstScreen = new FirstScreen_1.default(this);
     }
     criarTime(name) {

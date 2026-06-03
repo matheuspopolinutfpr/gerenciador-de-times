@@ -1,5 +1,6 @@
 import FirstScreen from "../view/FirstScreen";
 import MainService from "../service/MainService";
+import JsonDatabase from "../database/JsonDatabase";
 import Jogador from "../model/Jogador";
 import Tecnico from "../model/Tecnico";
 import Time from "../model/Time";
@@ -11,7 +12,7 @@ export default class MainController {
     private mainService: MainService;
 
     constructor() {
-        this.mainService = new MainService();
+        this.mainService = new MainService(new JsonDatabase());
         this.firstScreen = new FirstScreen(this);
     }
 

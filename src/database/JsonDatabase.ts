@@ -1,10 +1,11 @@
 import * as fs from 'fs';
-import Repository from "./service/Repository";
-import Jogador from "./model/Jogador";
-import Tecnico from "./model/Tecnico";
-import Time from "./model/Time";
+import IDatabase from '../interface/IDatabase';
+import Repository from "../service/Repository";
+import Jogador from "../model/Jogador";
+import Tecnico from "../model/Tecnico";
+import Time from "../model/Time";
 
-export default class Database {
+export default class JsonDatabase implements IDatabase {
     public times: Repository<Time> = new Repository<Time>();
     public jogadores: Repository<Jogador> = new Repository<Jogador>();
     public tecnicos: Repository<Tecnico> = new Repository<Tecnico>();

@@ -3,13 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Database_1 = __importDefault(require("../Database"));
 const Jogador_1 = __importDefault(require("../model/Jogador"));
 const Tecnico_1 = __importDefault(require("../model/Tecnico"));
 const Time_1 = __importDefault(require("../model/Time"));
 class MainService {
-    constructor() {
-        this.database = new Database_1.default();
+    constructor(database) {
+        this.database = database;
     }
     criarTime(name) {
         const time = new Time_1.default(name);

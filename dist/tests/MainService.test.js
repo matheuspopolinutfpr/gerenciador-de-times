@@ -4,16 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const MainService_1 = __importDefault(require("../service/MainService"));
+const MemoryDatabase_1 = __importDefault(require("../database/MemoryDatabase"));
 const globals_1 = require("@jest/globals");
 const EnumPosicao_1 = require("../enum/EnumPosicao");
 (0, globals_1.describe)("Testes do MainService", () => {
     let service;
     (0, globals_1.beforeEach)(() => {
-        const fs = require('fs');
-        if (fs.existsSync('database.json')) {
-            fs.unlinkSync('database.json');
-        }
-        service = new MainService_1.default();
+        service = new MainService_1.default(new MemoryDatabase_1.default());
     });
     (0, globals_1.test)("Deve criar um time corretamente", () => {
         const time = service.criarTime("Flamengo");

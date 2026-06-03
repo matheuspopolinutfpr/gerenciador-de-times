@@ -27,11 +27,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
-const Repository_1 = __importDefault(require("./service/Repository"));
-const Jogador_1 = __importDefault(require("./model/Jogador"));
-const Tecnico_1 = __importDefault(require("./model/Tecnico"));
-const Time_1 = __importDefault(require("./model/Time"));
-class Database {
+const Repository_1 = __importDefault(require("../service/Repository"));
+const Jogador_1 = __importDefault(require("../model/Jogador"));
+const Tecnico_1 = __importDefault(require("../model/Tecnico"));
+const Time_1 = __importDefault(require("../model/Time"));
+class JsonDatabase {
     constructor() {
         this.times = new Repository_1.default();
         this.jogadores = new Repository_1.default();
@@ -76,4 +76,4 @@ class Database {
         fs.writeFileSync('database.json', JSON.stringify(data, null, 2), 'utf-8');
     }
 }
-exports.default = Database;
+exports.default = JsonDatabase;

@@ -1,4 +1,4 @@
-import Database from "../Database";
+import IDatabase from "../interface/IDatabase";
 import Jogador from "../model/Jogador";
 import Tecnico from "../model/Tecnico";
 import Time from "../model/Time";
@@ -6,7 +6,11 @@ import { Posicao } from "../enum/EnumPosicao";
 
 export default class MainService {
 
-    public database: Database = new Database();
+    public database: IDatabase;
+
+    constructor(database: IDatabase) {
+        this.database = database;
+    }
 
     public criarTime(name: string): Time {
         const time = new Time(name);
